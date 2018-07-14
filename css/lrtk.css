@@ -1,0 +1,32 @@
+/* 懒人图库 搜集整理 www.lanrentuku.com */
+
+.jawbone-hero .jawbone-hero-image {
+	position:absolute;
+	background:transparent none no-repeat scroll 50% 0;
+	background-size:cover;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	width:100%;
+	margin:0 auto;
+	z-index:-1
+}
+.jawbone-hero {
+	height:100%;
+	min-height:550px
+}
+.jawbone-hero .jawbone-hero-image {
+	position:fixed
+}
+#h1.jawbone-takeover-minimulti .jawbone-hero-image {
+	background-image:url(../images/hero-600.jpg)
+}
+@media (min-width: 600px) {
+	#h1.jawbone-takeover-minimulti .jawbone-hero-image {
+	background-image:url(../images/hero-1280.jpg)
+}
+}@media (min-width: 1016px) {
+	#h1.jawbone-takeover-minimulti .jawbone-hero-image {
+	background-image:url(../images/hero-2000.jpg)
+}

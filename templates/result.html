@@ -1,0 +1,161 @@
+<!doctype html>
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/logo0.png">
+
+    <title>金融舆情监控预警系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+      <link href="/static/css/frontstyle.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index">
+              <img alt="Brand" src="/static/img/logo.png" height="32" width="135">
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input id="key" type="text" class="form-control" style="width: 320px" placeholder="请输入您想查询的事件或关键词">
+            </div>
+            <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+                <li><a href="statistics">实时数据</a></li>
+                <li><a href="graphic">统计图表</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="#">个人信息</a></li>
+                      <li><a href="#">我的收藏</a></li>
+                      <li><a href="#">系统消息</a></li>
+                      <li><a href="#">历史搜索</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">注销</a></li>
+                      <li role="separator" class="divider"></li>
+                  </ul>
+                </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">搜索结果</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>查询文本：</h3>
+                    <p style="font-size: 18px; margin-top: 15px">WTI 8月原油期货跌破45美元关口，现报44.81美元/桶。</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>预测行情下跌概率：</h3>
+                    <p style="color: crimson; font-size: 18px; margin-top: 15px">83.2%</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>操作：</h3>
+                    <button class="btn btn-info"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </div>
+            </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <h3>包含关键词：原油、下跌</h3>
+                  </div>
+              </div>
+              <h3>历史相似信息：</h3>
+              <table class="table table-striped">
+                <tr>
+                    <th>时间</th>
+                    <th>文本</th>
+                    <th>下跌情况</th>
+                    <th>反馈情况</th>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 13:56:10</td>
+                    <td>【行情】WTI原油跌破61美元/桶关口。</td>
+                    <td>下跌</td>
+                      <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 12:22:55</td>
+                    <td>据外媒：俄罗斯称2月原油产量较2016年10月减少30.04万桶/日。</td>
+                    <td>休市</td>
+                    <td>-</td>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 11:36:58</td>
+                    <td>WTI 4月原油期货收跌0.65美元，跌幅1.05%，报60.99美元/盎司。</td>
+                    <td>休市</td>
+                    <td>-</td>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 10:45:21</td>
+                    <td>美国石油游说组织API：特朗普政府对铝和钢铁征收关税的计划会加重石油和天然气行业的成本。</td>
+                    <td>下跌</td>
+                      <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 07:24:02</td>
+                    <td>WTI原油期货跌幅超过2%。</td>
+                    <td>休市</td>
+                    <td>-</td>
+                </tr>
+                  <tr>
+                    <td>2018-03-01 06:57:27</td>
+                    <td>WTI原油期货跌幅扩大至1.95%。</td>
+                    <td>休市</td>
+                    <td>-</td>
+                </tr>
+              </table>
+          </div>
+    </div>
+    </div><!-- /.container -->
+    <div id="footer" class="col-md-6 col-md-offset-3 col-xs-12 footer">
+        <h5 style="color: #0f0f0f">Copyright © 2018 Fintech 六神五组 &nbsp;| <a href="#" style="color: #0f0f0f">&nbsp;联系我们</a></h5>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
