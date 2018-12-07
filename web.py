@@ -23,5 +23,6 @@ def stat():
 def graphic():
     return render_template("graphic.html")
 
+
 if __name__ == '__main__':
     app.run()
