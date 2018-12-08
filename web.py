@@ -47,7 +47,7 @@ db.create_all()
 @app.route('/index')
 def index():
     context = {
-        'entity': Entity.all()
+        'entity': Entity.query.all()
     }
     return render_template("index.html", **context)
 
