@@ -12,6 +12,7 @@ import ConfigParser
 
 
 cf = ConfigParser.ConfigParser()
+cf.read("config.conf")
 db_host = cf.get("db", "db_local_host")
 db_user = cf.get("db", "db_user")
 db_password = cf.get("db", "db_password")
