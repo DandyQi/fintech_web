@@ -28,7 +28,7 @@ db = SQLAlchemy(app)
 class Entity(db.Model):
     __tablename__ = 'entity'
 
-    id = db.Column('id', db.Integer)
+    id = db.Column('id', db.Integer, primary_key=True)
     category = db.Column('category', db.VARCHAR)
     token = db.Column('token', db.VARCHAR)
     synonym = db.Column('synonym', db.VARCHAR)
