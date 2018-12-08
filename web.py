@@ -41,10 +41,13 @@ class Entity(db.Model):
                                     self.pos)
 
 
+db.create_all()
+
+
 @app.route('/index')
 def index():
     context = {
-        'entity': Entity.query.order_by('id').all()
+        'entity': Entity.all()
     }
     return render_template("index.html", **context)
 
