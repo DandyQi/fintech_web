@@ -53,4 +53,6 @@ def index():
 
 
 if __name__ == '__main__':
+    e = Entity()
+    print(e.query.first().token)
     app.run()
