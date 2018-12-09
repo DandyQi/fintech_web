@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    词典库
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="{{ url_for('entity') }}">实体表</a></li>
+                    <li><a href="{{ url_for('relation') }}">关系表</a></li>
+                    <li class="disabled"><a href="#">信息表</a></li>
+                    <li class="disabled"><a href="#">知识表</a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="{{ url_for('upload') }}">上传数据 <span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1>上传文件</h1>
+                <p>
+                    目前仅支持CSV格式文件上传，上传时文件列名应与数据表字段统一（顺序无关），即：<br><br>
+                    category, token, synonym, norm_token, extra, pos<br><br>
+                    其中，category, token, norm_token, pos为必须字段，在文件中应写明；synonym, extra可空<br><br>
+                </p>
+                <form class="form-inline" method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="table">目标数据表</label>
+                        {{ form.table }}
+                    </div>
+                    <div class="form-group">
+                        <label for="doc">选择文件</label>
+                        {{ form.doc }}
+                    </div>
+                    {{ form.submit }}
+
+                    {% for error in form.doc.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </form>
+
+                {% if file_url %}
+                    <br><p>{{ file_url }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
