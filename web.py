@@ -107,8 +107,8 @@ class UploadForm(FlaskForm):
     )
     table = SelectField(
         validators=[DataRequired(u'请选择上传到哪张表')],
-        choices=[(0, "entity"), (1, "relation")],
-        default=0,
+        choices=[(1, "entity"), (2, "relation")],
+        default=1,
         coerce=int,
         render_kw={
             "class": "form-control",
@@ -131,7 +131,7 @@ def upload():
         file_url = data.url(filename)
 
         df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8")
-        if form.table.data == 1:
+        if form.table.data == 2:
             for idx, row in df.iterrows():
                 row = row.where(row.notnull(), None)
                 r = Relation()
@@ -142,7 +142,7 @@ def upload():
                 r.pos = row["pos"]
                 r.extra = row["extra"]
                 db.session.add(r)
-        elif form.table.data == 0:
+        elif form.table.data == 1:
             for idx, row in df.iterrows():
                 row = row.where(row.notnull(), None)
                 e = Entity()
