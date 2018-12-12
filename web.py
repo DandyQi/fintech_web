@@ -154,7 +154,7 @@ def upload():
         filename = data.save(form.doc.data)
         file_url = data.url(filename)
 
-        df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8")
+        df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8", sep="\t")
         if form.table.data == 3:
             for idx, row in df.iterrows():
                 row = row.where(row.notnull(), None)
