@@ -68,6 +68,21 @@ class Relation(db.Model):
                                       self.pos)
 
 
+class Knowledge(db.Model):
+    __tablename__ = 'knowledge'
+
+    id = db.Column('id', db.Integer, primary_key=True)
+    category = db.Column('category', db.VARCHAR)
+    sub_entity = db.Column('sub_entity', db.VARCHAR)
+    relation = db.Column('relation', db.VARCHAR)
+    obj_entity = db.Column('obj_entity', db.VARCHAR)
+    extra = db.Column('extra', db.VARCHAR)
+
+    def __repr__(self):
+        return '<relation {}>'.format(self.id, self.category, self.sub_entity, self.relation, self.obj_entity,
+                                      self.extra)
+
+
 db.create_all()
 
 
@@ -89,6 +104,15 @@ def relation():
     return render_template("relation.html", **context)
 
 
+@app.route("/knowledge", methods=['GET'])
+def knowledge():
+    page = request.args.get('page', 1, type=int)
+    context = {
+        'knowledge': Knowledge.query.paginate(page, 20, False)
+    }
+    return render_template("knowledge.html", **context)
+
+
 data = UploadSet("data", extensions=DATA)
 configure_uploads(app, data)
 patch_request_class(app)
@@ -107,7 +131,7 @@ class UploadForm(FlaskForm):
     )
     table = SelectField(
         validators=[DataRequired(u'请选择上传到哪张表')],
-        choices=[(1, "entity"), (2, "relation")],
+        choices=[(1, "entity"), (2, "relation"), (3, "knowledge")],
         default=1,
         coerce=int,
         render_kw={
@@ -131,6 +155,16 @@ def upload():
         file_url = data.url(filename)
 
         df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8")
+        if form.table.data == 3:
+            for idx, row in df.iterrows():
+                row = row.where(row.notnull(), None)
+                k = Knowledge()
+                k.category = row["category"]
+                k.sub_entity = row["sub_entity"]
+                k.relation = row["relation"]
+                k.obj_entity = row["obj_entity"]
+                k.extra = row["extra"]
+                db.session.add(k)
         if form.table.data == 2:
             for idx, row in df.iterrows():
                 row = row.where(row.notnull(), None)

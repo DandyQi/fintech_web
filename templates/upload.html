@@ -11,8 +11,7 @@
                 <ul class="nav nav-sidebar">
                     <li><a href="{{ url_for('entity') }}">实体表</a></li>
                     <li><a href="{{ url_for('relation') }}">关系表</a></li>
-                    <li class="disabled"><a href="#">信息表</a></li>
-                    <li class="disabled"><a href="#">知识表</a></li>
+                    <li><a href="{{ url_for('knowledge') }}">知识表</a></li>
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="{{ url_for('upload') }}">上传数据 <span class="sr-only">(current)</span></a></li>
@@ -21,9 +20,11 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1>上传文件</h1>
                 <p>
-                    目前仅支持CSV格式文件上传，上传时文件列名应与数据表字段统一（顺序无关），即：<br><br>
-                    category, token, synonym, norm_token, extra, pos<br><br>
+                    目前仅支持CSV格式文件上传，上传时文件列名应与数据表字段统一（顺序无关）<br><br>
+                    实体表与关系表：category, token, synonym, norm_token, extra, pos<br><br>
                     其中，category, token, norm_token, pos为必须字段，在文件中应写明；synonym, extra可空<br><br>
+                    知识表：category, sub_entity, relation, obj_entity, extra<br><br>
+                    其中，category, sub_entity, relation为必须字段，在文件中应写明；obj_enity, extra可空<br><br>
                 </p>
                 <form class="form-inline" method="POST" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}

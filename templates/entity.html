@@ -11,8 +11,7 @@
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="{{ url_for('entity') }}">实体表 <span class="sr-only">(current)</span></a></li>
                     <li><a href="{{ url_for('relation') }}">关系表</a></li>
-                    <li class="disabled"><a href="#">信息表</a></li>
-                    <li class="disabled"><a href="#">知识表</a></li>
+                    <li><a href="{{ url_for('knowledge') }}">知识表</a></li>
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li><a href="{{ url_for('upload') }}">上传数据</a></li>

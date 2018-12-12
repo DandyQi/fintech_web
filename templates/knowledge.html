@@ -10,8 +10,8 @@
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li><a href="{{ url_for('entity') }}">实体表</a></li>
-                    <li class="active"><a href="{{ url_for('relation') }}">关系表 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="{{ url_for('knowledge') }}">知识表</a></li>
+                    <li><a href="{{ url_for('relation') }}">关系表</a></li>
+                    <li class="active"><a href="{{ url_for('knowledge') }}">知识表 <span class="sr-only">(current)</span></a></li>
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li><a href="{{ url_for('upload') }}">上传数据</a></li>
@@ -24,23 +24,21 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Category</th>
-                                <th>Token</th>
-                                <th>Synonym</th>
-                                <th>Norm Token</th>
-                                <th>POS</th>
+                                <th>Subject Entity</th>
+                                <th>Relation</th>
+                                <th>Object Entity</th>
                                 <th>Extra</th>
                                 <th>Modify</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in relation.items %}
+                            {% for item in knowledge.items %}
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.category }}</td>
-                                    <td>{{ item.token }}</td>
-                                    <td>{{ item.synonym }}</td>
-                                    <td>{{ item.norm_token }}</td>
-                                    <td>{{ item.pos }}</td>
+                                    <td>{{ item.sub_enity }}</td>
+                                    <td>{{ item.relation }}</td>
+                                    <td>{{ item.obj_entity }}</td>
                                     <td>{{ item.extra }}</td>
                                     <td>update</td>
                                 </tr>
@@ -49,13 +47,13 @@
                     </table>
                     <nav>
                         <ul class="pager">
-                            {% if relation.has_prev %}
-                            <li class="previous"><a href="{{ url_for('relation', page = entity.prev_num) }}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 前页</a></li>
+                            {% if knowledge.has_prev %}
+                            <li class="previous"><a href="{{ url_for('knowledge', page = knowledge.prev_num) }}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 前页</a></li>
                             {% else %}
                             <li class="previous disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 前页</a></li>
                             {% endif %}
-                            {% if relation.has_next %}
-                            <li class="next"><a href="{{ url_for('relation', page = entity.next_num) }}">后页 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                            {% if knowledge.has_next %}
+                            <li class="next"><a href="{{ url_for('knowledge', page = knowledge.next_num) }}">后页 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
                             {% else %}
                             <li class="next disabled"><a href="#">后页 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
                             {% endif %}
