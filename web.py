@@ -192,7 +192,7 @@ def upload():
             else:
                 msg = u"上传失败，请查看表格结构是否与上述说明相同"
         except Exception as e:
-            msg = e
+            msg = u"发生错误：%s" % e
 
         return render_template('upload.html', form=form, msg=msg)
     else:
