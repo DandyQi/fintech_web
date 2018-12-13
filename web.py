@@ -187,9 +187,9 @@ def upload():
                     e.extra = row["extra"]
                     db.session.add(e)
             db.session.commit()
-            msg = "上传成功"
+            msg = u"上传成功"
         else:
-            msg = "上传失败，请查看表格结构是否与上述说明相同"
+            msg = u"上传失败，请查看表格结构是否与上述说明相同"
     except Exception as e:
         msg = e
 
