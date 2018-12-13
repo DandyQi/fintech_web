@@ -150,50 +150,53 @@ class UploadForm(FlaskForm):
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     form = UploadForm()
-    try:
-        if form.validate_on_submit():
-            filename = data.save(form.doc.data)
-            df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8", sep="\t")
-            if form.table.data == 3:
-                for idx, row in df.iterrows():
-                    row = row.where(row.notnull(), None)
-                    k = Knowledge()
-                    k.category = row["category"]
-                    k.sub_entity = row["sub_entity"]
-                    k.relation = row["relation"]
-                    k.obj_entity = row["obj_entity"]
-                    k.extra = row["extra"]
-                    db.session.add(k)
-            if form.table.data == 2:
-                for idx, row in df.iterrows():
-                    row = row.where(row.notnull(), None)
-                    r = Relation()
-                    r.category = row["category"]
-                    r.token = row["token"]
-                    r.synonym = row["synonym"]
-                    r.norm_token = row["norm_token"]
-                    r.pos = row["pos"]
-                    r.extra = row["extra"]
-                    db.session.add(r)
-            elif form.table.data == 1:
-                for idx, row in df.iterrows():
-                    row = row.where(row.notnull(), None)
-                    e = Entity()
-                    e.category = row["category"]
-                    e.token = row["token"]
-                    e.synonym = row["synonym"]
-                    e.norm_token = row["norm_token"]
-                    e.pos = row["pos"]
-                    e.extra = row["extra"]
-                    db.session.add(e)
-            db.session.commit()
-            msg = u"上传成功"
-        else:
-            msg = u"上传失败，请查看表格结构是否与上述说明相同"
-    except Exception as e:
-        msg = e
+    if request.method == "POST":
+        try:
+            if form.validate_on_submit():
+                filename = data.save(form.doc.data)
+                df = pd.read_csv(os.path.join(UPLOAD_PATH, filename), encoding="utf-8", sep="\t")
+                if form.table.data == 3:
+                    for idx, row in df.iterrows():
+                        row = row.where(row.notnull(), None)
+                        k = Knowledge()
+                        k.category = row["category"]
+                        k.sub_entity = row["sub_entity"]
+                        k.relation = row["relation"]
+                        k.obj_entity = row["obj_entity"]
+                        k.extra = row["extra"]
+                        db.session.add(k)
+                if form.table.data == 2:
+                    for idx, row in df.iterrows():
+                        row = row.where(row.notnull(), None)
+                        r = Relation()
+                        r.category = row["category"]
+                        r.token = row["token"]
+                        r.synonym = row["synonym"]
+                        r.norm_token = row["norm_token"]
+                        r.pos = row["pos"]
+                        r.extra = row["extra"]
+                        db.session.add(r)
+                elif form.table.data == 1:
+                    for idx, row in df.iterrows():
+                        row = row.where(row.notnull(), None)
+                        e = Entity()
+                        e.category = row["category"]
+                        e.token = row["token"]
+                        e.synonym = row["synonym"]
+                        e.norm_token = row["norm_token"]
+                        e.pos = row["pos"]
+                        e.extra = row["extra"]
+                        db.session.add(e)
+                db.session.commit()
+                msg = u"上传成功"
+            else:
+                msg = u"上传失败，请查看表格结构是否与上述说明相同"
+        except Exception as e:
+            msg = e
 
-    return render_template('upload.html', form=form, msg=msg)
+        return render_template('upload.html', form=form, msg=msg)
+    else:
+        return render_template('upload.html', form=form, msg=None)
 
 
 if __name__ == '__main__':
