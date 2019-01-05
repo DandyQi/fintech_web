@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Domain</th>
                                 <th>Category</th>
                                 <th>Token</th>
                                 <th>Synonym</th>
@@ -36,6 +37,7 @@
                             {% for item in entity.items %}
                                 <tr>
                                     <td>{{ item.id }}</td>
+                                    <td>{{ item.domain }}</td>
                                     <td>{{ item.category }}</td>
                                     <td>{{ item.token }}</td>
                                     <td>{{ item.synonym }}</td>

@@ -40,6 +40,7 @@ class Entity(db.Model):
     __tablename__ = 'entity'
 
     id = db.Column('id', db.Integer, primary_key=True)
+    domain = db.Column('domain', db.VARCHAR)
     category = db.Column('category', db.VARCHAR)
     token = db.Column('token', db.VARCHAR)
     synonym = db.Column('synonym', db.VARCHAR)
@@ -48,14 +49,15 @@ class Entity(db.Model):
     pos = db.Column('pos', db.VARCHAR)
 
     def __repr__(self):
-        return '<entity {}>'.format(self.id, self.token, self.category, self.synonym, self.norm_token, self.extra,
-                                    self.pos)
+        return '<entity {}>'.format(self.id, self.token, self.domain, self.category, self.synonym, self.norm_token,
+                                    self.extra, self.pos)
 
 
 class Relation(db.Model):
     __tablename__ = 'relation'
 
     id = db.Column('id', db.Integer, primary_key=True)
+    domain = db.Column('domain', db.VARCHAR)
     category = db.Column('category', db.VARCHAR)
     token = db.Column('token', db.VARCHAR)
     synonym = db.Column('synonym', db.VARCHAR)
@@ -64,8 +66,8 @@ class Relation(db.Model):
     pos = db.Column('pos', db.VARCHAR)
 
     def __repr__(self):
-        return '<relation {}>'.format(self.id, self.token, self.category, self.synonym, self.norm_token, self.extra,
-                                      self.pos)
+        return '<relation {}>'.format(self.id, self.token, self.domain, self.category, self.synonym, self.norm_token,
+                                      self.extra, self.pos)
 
 
 class Knowledge(db.Model):
@@ -169,6 +171,7 @@ def upload():
                     for idx, row in df.iterrows():
                         row = row.where(row.notnull(), None)
                         r = Relation()
+                        r.domain = row["domain"]
                         r.category = row["category"]
                         r.token = row["token"]
                         r.synonym = row["synonym"]
@@ -180,6 +183,7 @@ def upload():
                     for idx, row in df.iterrows():
                         row = row.where(row.notnull(), None)
                         e = Entity()
+                        e.domain = row["domain"]
                         e.category = row["category"]
                         e.token = row["token"]
                         e.synonym = row["synonym"]
@@ -197,6 +201,26 @@ def upload():
         return render_template('upload.html', form=form, msg=msg)
     else:
         return render_template('upload.html', form=form, msg=None)
+
+
+@app.route('/search/')
+def search():
+    keyword = request.args.get('keyword')
+    entity_res = Entity.query.filter(
+        (
+            Entity.token.contains(keyword) or
+            Entity.norm_token.contains(keyword) or
+            Entity.synonym.contains(keyword)
+        )
+    )
+    relation_res = Relation.query.filter(
+        (
+            Relation.token.contains(keyword) or
+            Relation.norm_token.contains(keyword) or
+            Relation.synonym.contains(keyword)
+        )
+    )
+    return render_template('search_result.html', e_res=entity_res, r_res=relation_res)
 
 
 if __name__ == '__main__':

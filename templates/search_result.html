@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    搜索结果
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <h3>搜索结果</h3>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h5>实体表结果</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Domain</th>
+                                <th>Category</th>
+                                <th>Token</th>
+                                <th>Synonym</th>
+                                <th>Norm Token</th>
+                                <th>POS</th>
+                                <th>Extra</th>
+                                <th>Modify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in e_res.items %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.domain }}</td>
+                                    <td>{{ item.category }}</td>
+                                    <td>{{ item.token }}</td>
+                                    <td>{{ item.synonym }}</td>
+                                    <td>{{ item.norm_token }}</td>
+                                    <td>{{ item.pos }}</td>
+                                    <td>{{ item.extra }}</td>
+                                    <td>update</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h5>关系表结果</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Domain</th>
+                                <th>Category</th>
+                                <th>Token</th>
+                                <th>Synonym</th>
+                                <th>Norm Token</th>
+                                <th>POS</th>
+                                <th>Extra</th>
+                                <th>Modify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in r_res.items %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.domain }}</td>
+                                    <td>{{ item.category }}</td>
+                                    <td>{{ item.token }}</td>
+                                    <td>{{ item.synonym }}</td>
+                                    <td>{{ item.norm_token }}</td>
+                                    <td>{{ item.pos }}</td>
+                                    <td>{{ item.extra }}</td>
+                                    <td>update</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

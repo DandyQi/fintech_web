@@ -40,8 +40,8 @@
                     <li class="disabled"><a href="#">意图库</a></li>
                     <li class="disabled"><a href="#">帮助中心</a></li>
                 </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search...">
+                <form class="navbar-form navbar-right" action="{{ url_for('search') }}" method="get">
+                    <input name="keyword" type="text" class="form-control" placeholder="请输入关键字开始搜索">
                 </form>
             </div>
         </div>
