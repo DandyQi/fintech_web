@@ -7,7 +7,7 @@
 {% block main %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-sm-9 col-md-10 main">
                 <h3>搜索结果</h3>
                 <h5>实体表结果</h5>
                 <div class="table-responsive">
@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in e_res.items %}
+                            {% for item in e_res %}
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.domain }}</td>
@@ -59,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in r_res.items %}
+                            {% for item in r_res %}
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.domain }}</td>
