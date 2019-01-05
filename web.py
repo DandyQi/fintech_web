@@ -207,6 +207,7 @@ def upload():
 @app.route('/search/')
 def search():
     keyword = request.args.get('keyword')
+    print(keyword)
     entity_res = Entity.query.filter(
         or_(
             Entity.token.contains(keyword),
