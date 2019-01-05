@@ -5,7 +5,8 @@
 # File usage: web controller
 
 from flask import Flask, request, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 from flask_uploads import UploadSet, configure_uploads, patch_request_class, DATA
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -207,16 +208,16 @@ def upload():
 def search():
     keyword = request.args.get('keyword')
     entity_res = Entity.query.filter(
-        (
-            Entity.token.contains(keyword) or
-            Entity.norm_token.contains(keyword) or
+        or_(
+            Entity.token.contains(keyword),
+            Entity.norm_token.contains(keyword),
             Entity.synonym.contains(keyword)
         )
     )
     relation_res = Relation.query.filter(
-        (
-            Relation.token.contains(keyword) or
-            Relation.norm_token.contains(keyword) or
+        or_(
+            Relation.token.contains(keyword),
+            Relation.norm_token.contains(keyword),
             Relation.synonym.contains(keyword)
         )
     )
