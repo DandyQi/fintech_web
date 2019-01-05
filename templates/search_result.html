@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-9 col-md-10 main">
@@ -36,7 +37,9 @@
                                     <td>{{ item.norm_token }}</td>
                                     <td>{{ item.pos }}</td>
                                     <td>{{ item.extra }}</td>
-                                    <td>update</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-content="entity;{{ keyword }}"> 修改 </button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -69,7 +72,9 @@
                                     <td>{{ item.norm_token }}</td>
                                     <td>{{ item.pos }}</td>
                                     <td>{{ item.extra }}</td>
-                                    <td>update</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-content="relation;{{ keyword }}"> 修改 </button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -78,4 +83,65 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal -->
+    <form action="{{ url_for('search') }}" method="post">
+    {{ form.hidden_tag() }}
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">修改信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ form.keyword }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.table }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.id }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Domain" class="control-label">Domain:</label>
+                            {{ form.domain }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Category" class="control-label">Category:</label>
+                            {{ form.category }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Token" class="control-label">Token:</label>
+                            {{ form.token }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Synonym" class="control-label">Synonym:</label>
+                            {{ form.synonym }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Norm_Token" class="control-label">Norm Token:</label>
+                            {{ form.norm_token }}
+                        </div>
+                        <div class="form-group">
+                            <label for="POS" class="control-label">POS:</label>
+                            {{ form.pos }}
+                        </div>
+                        <div class="form-group">
+                            <label for="Extra" class="control-label">Extra:</label>
+                            {{ form.extra }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        {{ form.submit }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
 {% endblock %}

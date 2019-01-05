@@ -50,6 +50,36 @@
     <div class="body">
         {% block main %}{% endblock %}
     </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 
+<script type="text/javascript">
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var content = button.data('content');
+        var table = content.split(';')[0];
+        var keyword = content.split(';')[1];
+        var modal = $(this);
+        modal.find('#Table').attr("value", table);
+        modal.find('#Keyword').attr("value", keyword);
+
+        var id = button.closest('tr').find('td').eq(0).text();
+        modal.find('#ID').attr("value", id);
+        var domain = button.closest('tr').find('td').eq(1).text();
+        modal.find('#Domain').attr("value", domain);
+        var category = button.closest('tr').find('td').eq(2).text();
+        modal.find('#Category').attr("value", category);
+        var token = button.closest('tr').find('td').eq(3).text();
+        modal.find('#Token').attr("value", token);
+        var synonym = button.closest('tr').find('td').eq(4).text();
+        modal.find('#Synonym').attr("value", synonym);
+        var norm_token = button.closest('tr').find('td').eq(5).text();
+        modal.find('#Norm_Token').attr("value", norm_token);
+        var pos = button.closest('tr').find('td').eq(6).text();
+        modal.find('#POS').attr("value", pos);
+        var extra = button.closest('tr').find('td').eq(7).text();
+        modal.find('#Extra').attr("value", extra);
+    })
+</script>
 </body>
 </html>

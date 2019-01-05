@@ -4,13 +4,13 @@
 # Created time: 2018/12/8 14:55
 # File usage: web controller
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from flask_uploads import UploadSet, configure_uploads, patch_request_class, DATA
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import SubmitField, SelectField
+from wtforms import SubmitField, SelectField, StringField
 from wtforms.validators import DataRequired
 
 import os
@@ -204,24 +204,135 @@ def upload():
         return render_template('upload.html', form=form, msg=None)
 
 
-@app.route('/search/')
+class UpdateForm(FlaskForm):
+    keyword = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "Keyword",
+            "type": "hidden"
+        }
+    )
+    table = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "Table",
+            "type": "hidden"
+        }
+    )
+    id = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "ID",
+            "type": "hidden"
+        }
+    )
+    domain = StringField(
+        validators=[DataRequired(u'请填写所属垂域')],
+        render_kw={
+            "class": "form-control",
+            "id": "Domain",
+            "type": "text"
+        }
+    )
+    category = StringField(
+        validators=[DataRequired(u'请填写所属类别')],
+        render_kw={
+            "class": "form-control",
+            "id": "Category",
+            "type": "text"
+        }
+    )
+    token = StringField(
+        validators=[DataRequired(u'请填写词语')],
+        render_kw={
+            "class": "form-control",
+            "id": "Token",
+            "type": "text"
+        }
+    )
+    synonym = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "Synonym",
+            "type": "text"
+        }
+    )
+    norm_token = StringField(
+        validators=[DataRequired(u'请填写规范化词语')],
+        render_kw={
+            "class": "form-control",
+            "id": "Norm_Token",
+            "type": "text"
+        }
+    )
+    pos = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "POS",
+            "type": "text"
+        }
+    )
+    extra = StringField(
+        render_kw={
+            "class": "form-control",
+            "id": "Extra",
+            "type": "text"
+        }
+    )
+    submit = SubmitField(
+        u'保存',
+        render_kw={
+            "class": "btn btn-primary"
+        }
+    )
+
+
+@app.route('/search/', methods=['GET', 'POST'])
 def search():
-    keyword = request.args.get('keyword')
-    entity_res = Entity.query.filter(
-        or_(
-            Entity.token.contains(keyword),
-            Entity.norm_token.contains(keyword),
-            Entity.synonym.contains(keyword)
-        )
-    ).all()
-    relation_res = Relation.query.filter(
-        or_(
-            Relation.token.contains(keyword),
-            Relation.norm_token.contains(keyword),
-            Relation.synonym.contains(keyword)
-        )
-    ).all()
-    return render_template('search_result.html', e_res=entity_res, r_res=relation_res)
+    form = UpdateForm()
+    if request.method == "GET":
+        keyword = request.args.get('keyword')
+        entity_res = Entity.query.filter(
+            or_(
+                Entity.token.contains(keyword),
+                Entity.norm_token.contains(keyword),
+                Entity.synonym.contains(keyword)
+            )
+        ).all()
+        relation_res = Relation.query.filter(
+            or_(
+                Relation.token.contains(keyword),
+                Relation.norm_token.contains(keyword),
+                Relation.synonym.contains(keyword)
+            )
+        ).all()
+        return render_template('search_result.html', keyword=keyword, e_res=entity_res, r_res=relation_res, form=form)
+    elif request.method == "POST":
+        keyword = ""
+        if form.validate_on_submit():
+            keyword = form.keyword.data
+            if form.table.data == "entity":
+                item = Entity.query.filter_by(id=form.id.data).first()
+                item.domain = form.domain.data
+                item.category = form.category.data
+                item.token = form.token.data
+                item.synonym = form.synonym.data if form.synonym.data != "" else None
+                item.norm_token = form.norm_token.data
+                item.pos = form.pos.data
+                item.extra = form.extra.data if form.extra.data != "" else None
+                db.session.commit()
+            elif form.table.data == "relation":
+                item = Relation.query.filter_by(id=form.id.data).first()
+                item.domain = form.domain.data
+                item.category = form.category.data
+                item.token = form.token.data
+                item.synonym = form.synonym.data if form.synonym.data != "" else None
+                item.norm_token = form.norm_token.data
+                item.pos = form.pos.data
+                item.extra = form.extra.data if form.extra.data != "" else None
+                db.session.commit()
+
+        return redirect('/search/?keyword=%s' % keyword)
 
 
 if __name__ == '__main__':
